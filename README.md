@@ -6,6 +6,11 @@ Use opengl to render shadow.
 
 2. glew1.90(http://glew.sourceforge.net)
 
+# Function
+Press '1' key to rotate the point light
+
+Press '2' change rendering mode(depth map or shadow map)
+
 # Gallery
 ![image](https://github.com/letletmego/OpenGL-Shadow-Map/blob/main/Gallery/ShadowMap.png)
 
