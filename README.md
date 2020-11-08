@@ -2,14 +2,14 @@
 Use opengl to render shadow.
 
 # Building
-1. Visual studio 2010(or higher) windows application project
+1.Visual studio 2010(or higher) windows application project
 
-2. glew1.90(http://glew.sourceforge.net)
+2.glew1.90(http://glew.sourceforge.net)
 
-# Function
-Press '1' key to rotate the point light
+# Other
+1.Press '1' key to rotate the point light
 
-Press '2' change rendering mode(depth map or shadow map)
+2.Press '2' change rendering mode(depth map or shadow map)
 
 # Gallery
 ![image](https://github.com/letletmego/OpenGL-Shadow-Map/blob/main/Gallery/ShadowMap.png)
