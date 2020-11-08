@@ -1,5 +1,5 @@
 # OpenGL-Shadow-Map
-Use opengl to render shadow.
+Use opengl to render realtime shadow.
 
 # Building
 1.Visual studio 2010(or higher) windows application project
