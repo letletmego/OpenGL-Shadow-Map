@@ -4,7 +4,7 @@ Use opengl to render shadow.
 # Building
 1.Visual studio 2010(or higher) windows application project
 
-2.OpenGL 4.0.0(or higher)
+2.OpenGL 4.0.0
 
 3.glew 1.90 (http://glew.sourceforge.net)
 
