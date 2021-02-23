@@ -131,29 +131,6 @@ void OpenGL::DepthShaderInitialize(void)
 	UniformMat4x4(&_depth_shader._program, _depth_shader.GetVariable(2), _light._sight.Perspective(), GL_TRUE);
 	glUseProgram(0);
 
-	unsigned int var_location = 0;
-	// Plane
-	glBindVertexArray(_depth_map._vao[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, _depth_map._vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * PLANE_DATA_ROW * PLANE_DATA_COL, _plane._data._vertex, GL_STATIC_DRAW);
-	var_location = glGetAttribLocation(_depth_shader._program, _depth_shader.GetVariable(3));
-	glVertexAttribPointer(var_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-	// Right cube
-	glBindVertexArray(_depth_map._vao[1]);
-	glBindBuffer(GL_ARRAY_BUFFER, _depth_map._vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * CUBE_DATA_ROW * CUBE_DATA_COL, _cube1._data._vertex, GL_STATIC_DRAW);
-	var_location = glGetAttribLocation(_depth_shader._program, _depth_shader.GetVariable(3));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-	// Left cube
-	glBindVertexArray(_depth_map._vao[2]);
-	glBindBuffer(GL_ARRAY_BUFFER, _depth_map._vbo[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * CUBE_DATA_ROW * CUBE_DATA_COL, _cube2._data._vertex, GL_STATIC_DRAW);
-	var_location = glGetAttribLocation(_depth_shader._program, _depth_shader.GetVariable(3));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -188,59 +165,8 @@ void OpenGL::RenderShaderInitialize(void)
 	UniformMat4x4(&_render_shader._program, _render_shader.GetVariable(5), _light._sight.Perspective(), GL_TRUE);
 	Uniform3fv(&_render_shader._program, _render_shader.GetVariable(6), (float *)&_light._p, GL_TRUE);
 	Uniform3fv(&_render_shader._program, _render_shader.GetVariable(7), (float *)&_light._rgb, GL_TRUE);
+	//GLSLSampler(&_render_shader._program, _render_shader.GetVariable(9), 0);
 	glUseProgram(0);
-
-	unsigned int var_location = 0;
-	// Plane
-	glBindVertexArray(_plane._vao[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[0]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(8));
-	glVertexAttribPointer(var_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[1]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(9));
-	glVertexAttribPointer(var_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[2]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(10));
-	glVertexAttribPointer(var_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	// Right cube
-	glBindVertexArray(_cube1._vao[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[0]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(8));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[1]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(9));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[2]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(10));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	// Left cube
-	glBindVertexArray(_cube2._vao[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[0]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(8));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[1]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(9));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[2]);
-	var_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(10));
-	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(var_location);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -257,6 +183,10 @@ void OpenGL::CanvasShaderInitialize(void)
 	_canvas_shader.CompileVertexShader("OpenGL\\Shader\\canvas.vs", "OpenGL\\Shader\\canvas_debug.txt");
 	_canvas_shader.CompileFragmentShader("OpenGL\\Shader\\canvas.fs", "OpenGL\\Shader\\canvas_debug.txt");
 	_canvas_shader.LinkShader("OpenGL\\Shader\\canvas_debug.txt");
+
+	//glUseProgram(_canvas_shader._program);
+	//GLSLSampler(&_canvas_shader._program, _canvas_shader.GetVariable(0), 0);
+	//glUseProgram(0);
 
 	unsigned int var_location = 0;
 
@@ -306,14 +236,28 @@ void OpenGL::DepthRendering(void)
 
 	glUseProgram(_depth_shader._program);
 
-	glBindVertexArray(_depth_map._vao[0]);
+	unsigned int var_location;
+	var_location = glGetAttribLocation(_depth_shader._program, _depth_shader.GetVariable(3));
+
+	glBindVertexArray(_plane._vao[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[0]);
+	glVertexAttribPointer(var_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_location);
 	glDrawArrays(GL_TRIANGLES, 0, PLANE_DATA_ROW);
 
-	glBindVertexArray(_depth_map._vao[1]);
+	glBindVertexArray(_cube1._vao[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[0]);
+	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_location);
 	glDrawArrays(GL_TRIANGLES, 0, CUBE_DATA_ROW);
 
-	glBindVertexArray(_depth_map._vao[2]);
+	glBindVertexArray(_cube2._vao[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[0]);
+	glVertexAttribPointer(var_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_location);
 	glDrawArrays(GL_TRIANGLES, 0, CUBE_DATA_ROW);
+
+	glDisableVertexAttribArray(var_location);
 
 	glDisable(GL_CULL_FACE);
 	// Back to default frame buffer
@@ -331,16 +275,58 @@ void OpenGL::SceneRendering(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(_render_shader._program);
+	unsigned int var_vertex_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(8));
+	unsigned int var_normal_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(9));
+	unsigned int var_color_location = glGetAttribLocation(_render_shader._program, _render_shader.GetVariable(10));
 
 	glBindTexture(GL_TEXTURE_2D, _depth_map._texture_object);
 
+	// Plane property
 	glBindVertexArray(_plane._vao[0]);
-    glDrawArrays(GL_TRIANGLES, 0, PLANE_DATA_ROW);
+	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[0]);
+	glVertexAttribPointer(var_vertex_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_vertex_location);
 
+	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[1]);
+	glVertexAttribPointer(var_normal_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_normal_location);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _plane._vbo[2]);
+	glVertexAttribPointer(var_color_location, PLANE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_color_location);
+
+	glDrawArrays(GL_TRIANGLES, 0, PLANE_DATA_ROW);
+
+	// Right cube property
 	glBindVertexArray(_cube1._vao[0]);
-    glDrawArrays(GL_TRIANGLES, 0, CUBE_DATA_ROW);
+	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[0]);
+	glVertexAttribPointer(var_vertex_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_vertex_location);
 
+	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[1]);
+	glVertexAttribPointer(var_normal_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_normal_location);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _cube1._vbo[2]);
+	glVertexAttribPointer(var_color_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_color_location);
+
+	glDrawArrays(GL_TRIANGLES, 0, CUBE_DATA_ROW);
+
+	// Left cube property
 	glBindVertexArray(_cube2._vao[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[0]);
+	glVertexAttribPointer(var_vertex_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_vertex_location);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[1]);
+	glVertexAttribPointer(var_normal_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_normal_location);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _cube2._vbo[2]);
+	glVertexAttribPointer(var_color_location, CUBE_DATA_COL, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(var_color_location);
+
     glDrawArrays(GL_TRIANGLES, 0, CUBE_DATA_ROW);
 
 	return;

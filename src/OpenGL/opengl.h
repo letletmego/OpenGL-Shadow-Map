@@ -42,6 +42,7 @@ public:
 	void RenderShaderInitialize(void);
 	void DepthShaderInitialize(void);
 	void CanvasShaderInitialize(void);
+	void BindSceneBuffer(void);
 	void Render(void);
 	void DepthRendering(void);
 	void SceneRendering(void);
