@@ -55,8 +55,6 @@ DepthMap::DepthMap(void)
 	, _height(0)
 	, _fbo(0)
 	, _texture_object(0)
-	, _vao()
-	, _vbo()
 {
 }
 
@@ -64,11 +62,6 @@ void DepthMap::Initialize(const unsigned int width, const unsigned int height)
 {
 	_width = width;
 	_height = height;
-
-	_vao.Initialize(3);
-	_vbo.Initialize(3);
-	glGenVertexArrays(_vao.N_Buffer(), _vao.BufferPointer());
-	glGenBuffers(_vbo.N_Buffer(), _vbo.BufferPointer());
 
 	// Create a texture object for depth map
 	glGenTextures(1, &_texture_object);

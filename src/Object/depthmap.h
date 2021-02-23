@@ -36,8 +36,6 @@ public:
 	unsigned int _height;
 	unsigned int _fbo;
 	unsigned int _texture_object;
-	GLBuffer _vao;
-	GLBuffer _vbo;
 
 public:
 	~DepthMap(void);
